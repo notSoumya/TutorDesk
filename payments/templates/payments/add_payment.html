@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Collect Fee{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">Collect Fee</h2>
+
+    {% if student %}
+    <div class="alert alert-primary">
+        <strong>Student:</strong> {{ student.name }}
+    </div>
+    {% endif %}
+
+    <div class="card shadow p-4">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="btn btn-success">
+                Save Payment
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

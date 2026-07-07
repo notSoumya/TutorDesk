@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4 fw-bold">
+        Dashboard
+    </h2>
+
+    <div class="row g-4">
+
+        <!-- Total Students -->
+        <div class="col-lg-3 col-md-6">
+
+            <div class="dashboard-card blue-card">
+
+                <div class="icon">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+
+                <h2>{{ total_students }}</h2>
+
+                <p>Total Students</p>
+
+                <small>+2 this month</small>
+
+            </div>
+
+        </div>
+
+        <!-- Monthly Revenue -->
+        <div class="col-lg-3 col-md-6">
+
+            <div class="dashboard-card green-card">
+
+                <div class="icon">
+                    <i class="bi bi-currency-rupee"></i>
+                </div>
+
+                <h2>₹{{ monthly_revenue }}</h2>
+
+                <p>Monthly Revenue</p>
+
+                <small>Current Month</small>
+
+            </div>
+
+        </div>
+
+        <!-- Pending Fees -->
+        <div class="col-lg-3 col-md-6">
+
+            <div class="dashboard-card red-card">
+
+                <div class="icon">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                </div>
+
+                <h2>₹{{ pending_fees }}</h2>
+
+                <p>Pending Fees</p>
+
+                <small>Need Attention</small>
+
+            </div>
+
+        </div>
+
+        <!-- Due Today -->
+        <div class="col-lg-3 col-md-6">
+
+            <div class="dashboard-card orange-card">
+
+                <div class="icon">
+                    <i class="bi bi-calendar-event-fill"></i>
+                </div>
+
+                <h2>{{ due_today }}</h2>
+
+                <p>Due Today</p>
+
+                <small>Students</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-5">
+
+    <!-- Revenue Chart -->
+
+    <div class="col-lg-8">
+
+        <div class="card p-4">
+
+            <h5 class="mb-4">
+                Monthly Revenue
+            </h5>
+
+            <canvas id="revenueChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- Recent Students -->
+
+    <div class="col-lg-4">
+
+        <div class="card p-4">
+
+            <h5 class="mb-4">
+                Recent Students
+            </h5>
+
+            <ul class="list-group list-group-flush">
+
+                {% for student in recent_students %}
+
+                <li class="list-group-item d-flex justify-content-between">
+
+                    {{ student.name }}
+
+                    <span class="badge bg-success">
+                        Active
+                    </span>
+
+                </li>
+
+                {% empty %}
+
+                <li class="list-group-item">
+                    No students yet.
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+const ctx = document.getElementById('revenueChart');
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: {{ chart_labels|safe }},
+
+        datasets: [{
+
+            label: "Revenue",
+
+            data: {{ chart_values|safe }},
+
+            borderColor:'#4f46e5',
+
+            backgroundColor:'rgba(79,70,229,.15)',
+
+            fill:true,
+
+            tension:.4
+
+        }]
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

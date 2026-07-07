@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: tutordesk
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn tutordesk.wsgi:application"
